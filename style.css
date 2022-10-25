@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    font-family: monospace, sans-serif;
+}
+
+.btn-container {
+    padding: 40px;
+}
+
+.btn {
+    font-family: monospace, sans-serif;
+    background-color: white;
+    border-radius: 4px;
+    width: 200px;
+    height: 100px;
+    box-shadow: 10px 10px 10px grey;
+}
+
+.scores-container {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+}
