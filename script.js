@@ -14,10 +14,10 @@ function getComputerChoice() {
 }
 
 // This allows user to define the game selection 
-function userInput() {
-    const ask = prompt("Start game, select: Rock, Paper or Scissors!");
-    return ask.toLowerCase();
-}
+// function userInput() {
+//     const ask = prompt("Start game, select: Rock, Paper or Scissors!");
+//     return ask.toLowerCase();
+// }
 
 // This creates the parameters to determine gameplay result
 function playRound(playerSelection, computerSelection) {
