@@ -1,3 +1,7 @@
+body { 
+    background-image: url(./img/paper-bg.jpg);
+}
+
 .wrapper {
     display: flex;
     align-items: center;
@@ -6,22 +10,55 @@
     font-family: monospace, sans-serif;
 }
 
-.btn-container {
+.header {
+    margin-top: 50px;
+}
+
+.sub-heading { 
+    padding-top: 10px;
+}
+
+.buttons {
     padding: 40px;
+    display: flex;
+    gap: 60px;
 }
 
 .btn {
     font-family: monospace, sans-serif;
     background-color: white;
+    border: solid 2px black;
     border-radius: 4px;
     width: 200px;
     height: 100px;
     box-shadow: 10px 10px 10px grey;
+    font-size: 16px;
+    transition: all .07s ease;
+}
+
+.clicked {
+    transform: scale(1.1);
+    border-color: #ffc600;
+}
+
+.img {
+    width: 100px;
+    height: 95px;
+}
+
+.round-reset {
+    margin-top: 25px;
+    padding: 10px;
 }
 
 .scores-container {
-    margin-top: 100px;
+    margin-top: 55px;
+    margin-bottom: 44px;
     display: flex;
     flex-direction: row;
     gap: 80px;
+}
+
+.round-count { 
+    margin-bottom: 22px;
 }
