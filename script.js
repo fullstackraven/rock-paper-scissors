@@ -1,22 +1,26 @@
-//Game
-let compChoice = {Value: ""};
-let playerChoice;
-let compChoiceInt = 0;
-let playerChoiceInt = 0;
-const buttons = document.querySelectorAll('.btn');
+//Game & UI: Rock, Paper, Scissors 
+
+//Variables
+let computerSelection = {Value: ""};
+let playerSelection;
+let computerSelectionInt = 0;
+let playerSelectionInt = 0;
 
 let playerScore = 0;
-let compScore = 0;
+let computerScore = 0;
 let roundCount = 0; 
+
+//Selectors - Targeting nodes - output to UI
+const buttons = document.querySelectorAll('.btn');
 
 const player = document.querySelector("#player-score");
 player.textContent = `Player Score: ${playerScore}`;
 
-const computer = document.querySelector("#comp-score");
-computer.textContent = `Computer Score: ${compScore}`;
+const computer = document.querySelector("#computer-score");
+computer.textContent = `Computer Score: ${computerScore}`;
 
 const output = document.querySelector("#output");
-output.textContent = "May the best win!";
+output.textContent = "Best of Luck!";
 
 const reset = document.querySelector('#roundReset');
 reset.textContent = "Click Rock, Paper or Scissors to play!";
@@ -24,98 +28,103 @@ reset.textContent = "Click Rock, Paper or Scissors to play!";
 const round = document.querySelector('#roundCount');
 round.textContent = ' ';
 
+//Removes the class that transforms the button on-click
 function removeTransition(e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('clicked');
+    if (e.propertyName !== 'transform') return; //Allows transform to transpire
+    e.target.classList.remove('clicked'); //Removes class when transition period closes (0.07s)
 }
 
-
+//Listens for buttons based on players choice
 buttons.forEach((button)=>{button.addEventListener('click',()=>{
 
-    playerChoice = button.id;
-    if (playerChoice == "rock"){
-        playerChoiceInt = 0;
+    playerSelection = button.id;
+    if (playerSelection == "rock"){
+        playerSelectionInt = 0; //output for playGame function
     }
-    else if (playerChoice == "paper"){
-        playerChoiceInt = 1;
+    else if (playerSelection == "paper"){
+        playerSelectionInt = 1; //output for playGame function
     }
-    else if (playerChoice == "scissors")
+    else if (playerSelection == "scissors")
     {
-        playerChoiceInt = 2;
+        playerSelectionInt = 2; //output for playGame function
     }
-    compChoiceInt = computerPlay(compChoice);
-    const click = document.querySelector(`button[id="${playerChoice}"]`);
+    computerSelectionInt = getRandomSelection(computerSelection);
+
+    //Selector that inserts the class that transforms the button display
+    const click = document.querySelector(`button[id="${playerSelection}"]`);
     click.classList.add('clicked');
+    //Selector & listener that stops the transition property on class btn
     const clicks = Array.from(document.querySelectorAll('.btn'));
     clicks.forEach(click => click.addEventListener('transitionend', removeTransition));
+    
     playGame();
     })
 
 })
 
-
-
-
-function computerPlay(compChoice){
-    let choiceNum = Math.floor(Math.random() * 3);
-    if (choiceNum == 0){
-        compChoice.Value = "rock";
+//Computer logic - Random choice generator
+function getRandomSelection(computerSelection){
+    let randomNum = Math.floor(Math.random() * 3);
+    if (randomNum == 0){
+        computerSelection.Value = "rock";
     }
-    else if (choiceNum == 1){
-        compChoice.Value = "paper";
+    else if (randomNum == 1){
+        computerSelection.Value = "paper";
     }
-    else if(choiceNum == 2){
-        compChoice.Value = "scissors";
+    else if(randomNum == 2){
+        computerSelection.Value = "scissors";
     }
-    return choiceNum;
+    return randomNum;
 }
 
+//Handles the incrementation of player & computer score, round count & generates text output in the UI
 function playRound(){
-        let win_array = [[0, 2, 1], 
+        let gameArray = [[0, 2, 1], 
                         [1, 0, 2], 
                         [2, 1, 0]];
-    let result = win_array[playerChoiceInt][compChoiceInt];
+    let result = gameArray[playerSelectionInt][computerSelectionInt];
     if (result == 0){
-    output.textContent = `Its a tie! You chose ${playerChoice} and the computer chose ${compChoice.Value}`;
+    output.textContent = `Its a tie! You chose ${playerSelection} and the computer chose ${computerSelection.Value}`;
     roundCount++;
     }
     else if (result == 1){
-    output.textContent = `You won! You chose ${playerChoice} and the computer chose ${compChoice.Value}`;
+    output.textContent = `You won! You chose ${playerSelection} and the computer chose ${computerSelection.Value}`;
     playerScore++;
     roundCount++;
 
     }
     else if (result == 2){
-    output.textContent = `You lost! You chose ${playerChoice} and the computer chose ${compChoice.Value}`;
-    compScore++;
+    output.textContent = `You lost! You chose ${playerSelection} and the computer chose ${computerSelection.Value}`;
+    computerScore++;
     roundCount++;
     }
 }
 
+//Gameplay logic - determines winner of fifth round - resets game & generates text output in UI
 function playGame(){
         reset.textContent = " ";
         playRound();
         player.textContent = `Player Score: ${playerScore}`;
-        computer.textContent = `Computer Score: ${compScore}`;
+        computer.textContent = `Computer Score: ${computerScore}`;
         round.textContent = `Round: ${roundCount}`;
 
         if (playerScore == 5){
             output.textContent = "You Won the Game!";
             playerScore = 0;
-            compScore = 0;
+            computerScore = 0;
             roundCount = 0;
             player.textContent = `Player Score: ${playerScore}`;
-            computer.textContent = `Computer Score: ${compScore}`;
+            computer.textContent = `Computer Score: ${computerScore}`;
             reset.textContent = "Congrats on the win! Press your luck and try again!";
             round.textContent = '';
         }
-        else if (compScore == 5){
+        else if (computerScore == 5){
             output.textContent = "You Lost the game";
             playerScore = 0;
-            compScore = 0;
+            computerScore = 0;
             roundCount = 0;
             player.textContent = `Player Score: ${playerScore}`;
-            computer.textContent = `Computer Score: ${compScore}`;
+            computer.textContent = `Computer Score: ${computerScore}`;
             reset.textContent = "The computer was just too good this time! Enact your revenge!";
             round.textContent = '';
         }
